@@ -1,0 +1,58 @@
+LangChain Practice Document
+===========================
+
+LangChain is a framework designed to help developers build applications powered by large language models (LLMs).
+It provides tools for prompt management, memory, chains, agents, and document loaders.
+
+Document Loaders
+----------------
+Document loaders are used to load data from various sources into a standardized document format.
+These documents can later be split, embedded, and stored in vector databases.
+
+Common document loaders include:
+- TextLoader for .txt files
+- PyPDFLoader for PDF documents
+- CSVLoader for CSV files
+- WebBaseLoader for web pages
+
+Each document loaded by LangChain contains two main components:
+1. page_content: The actual text
+2. metadata: Information such as source, file name, or page number
+
+Text files are the simplest starting point for understanding how document loaders work.
+
+Chunking and Splitting
+----------------------
+Large documents are usually split into smaller chunks before processing.
+This is done to:
+- Improve retrieval accuracy
+- Reduce token usage
+- Improve LLM performance
+
+Common text splitters:
+- CharacterTextSplitter
+- RecursiveCharacterTextSplitter
+- TokenTextSplitter
+
+Vector Stores
+-------------
+After loading and splitting documents, they are converted into embeddings.
+These embeddings are stored in vector databases such as FAISS, Chroma, or Pinecone.
+
+Vector stores allow semantic search over documents.
+Instead of keyword matching, searches are based on meaning.
+
+Use Case Example
+----------------
+Imagine you have a collection of company policies stored as text files.
+You can load them using a document loader, split them into chunks, embed them, and then ask questions like:
+
+"What is the company leave policy?"
+"How many days of remote work are allowed?"
+
+The system will retrieve the most relevant chunks and pass them to the language model.
+
+End of Document
+---------------
+This file is intentionally simple and structured to help you practice loading,
+splitting, and inspecting documents using LangChain.
