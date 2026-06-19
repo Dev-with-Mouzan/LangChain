@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Generator — AI Prompt Engineering</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Prompt Generator</h1>
+      <p>Describe what you need — get a production-ready structured prompt in seconds.</p>
+    </header>
+
+    <main>
+      <section class="card input-section">
+        <label for="user-input">Your Requirement</label>
+        <textarea
+          id="user-input"
+          rows="5"
+          placeholder="e.g. Write a landing page copy for a meditation app called CalmSpace..."
+        ></textarea>
+        <div class="tone-group">
+          <label for="tone-select">Tone</label>
+          <select id="tone-select">
+            <option value="Professional">Professional</option>
+            <option value="Casual">Casual</option>
+            <option value="Humorous">Humorous</option>
+            <option value="Academic">Academic</option>
+            <option value="Persuasive">Persuasive</option>
+            <option value="Empathetic">Empathetic</option>
+            <option value="Formal">Formal</option>
+            <option value="Creative">Creative</option>
+          </select>
+        </div>
+        <button id="generate-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Generate Prompt
+        </button>
+      </section>
+
+      <section class="card output-section" id="output-section" hidden>
+        <div class="output-header">
+          <h2>Generated Prompt</h2>
+        </div>
+        <div id="output-content"></div>
+        <div class="action-row">
+          <button id="copy-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copy to Clipboard
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      Powered by Gemini 2.5 Flash Lite
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
