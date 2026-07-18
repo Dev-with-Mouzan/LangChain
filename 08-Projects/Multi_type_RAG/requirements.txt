@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+pydantic
+python-multipart
+langchain
+langchain-groq
+langchain-ollama
+langchain-community
+faiss-cpu
+pypdf
+beautifulsoup4
+python-dotenv
+tiktoken
+streamlit
