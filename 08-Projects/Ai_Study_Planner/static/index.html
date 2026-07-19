@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-powered study planner that generates comprehensive learning guides for any topic">
+    <title>AI Study Planner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="app-wrapper">
+        <div class="bg-pattern"></div>
+        
+        <main class="container" role="main">
+            <header class="header">
+                <div class="logo-wrapper">
+                    <div class="logo" aria-hidden="true">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                        </svg>
+                    </div>
+                    <div class="logo-glow" aria-hidden="true"></div>
+                </div>
+                
+                <h1 class="title">
+                    <span class="title-gradient">AI Study</span>
+                    <span class="title-solid">Planner</span>
+                </h1>
+                <p class="subtitle">Enter any topic and get a comprehensive study guide powered by AI</p>
+                
+                <div class="badges">
+                    <span class="badge">
+                        <span class="badge-dot"></span>
+                        GPT-4o-mini
+                    </span>
+                    <span class="badge">
+                        <span class="badge-dot green"></span>
+                        Instant Results
+                    </span>
+                </div>
+            </header>
+
+            <form id="studyForm" class="search-form" aria-label="Study plan generator">
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.3-4.3"/>
+                        </svg>
+                        <input 
+                            type="text" 
+                            id="topicInput" 
+                            class="search-input"
+                            placeholder="What do you want to learn today?" 
+                            required
+                            autocomplete="off"
+                            aria-describedby="inputHint"
+                        >
+                        <span id="inputHint" class="sr-only">Enter a topic like Machine Learning, Quantum Physics, or History</span>
+                    </div>
+                    <button type="submit" id="submitBtn" class="submit-btn" aria-label="Generate study plan">
+                        <span class="btn-text">Generate</span>
+                        <svg class="btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M5 12h14"/>
+                            <path d="m12 5 7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="quick-topics">
+                    <span class="quick-label">Try:</span>
+                    <button type="button" class="quick-topic" data-topic="Machine Learning">Machine Learning</button>
+                    <button type="button" class="quick-topic" data-topic="Quantum Physics">Quantum Physics</button>
+                    <button type="button" class="quick-topic" data-topic="Blockchain">Blockchain</button>
+                    <button type="button" class="quick-topic" data-topic="Climate Change">Climate Change</button>
+                </div>
+            </form>
+
+            <div id="loading" class="loading hidden" role="status" aria-live="polite">
+                <div class="loading-spinner">
+                    <div class="spinner-ring"></div>
+                    <div class="spinner-ring"></div>
+                    <div class="spinner-ring"></div>
+                </div>
+                <p class="loading-text">Generating your study plan...</p>
+                <p class="loading-subtext">This may take a few seconds</p>
+            </div>
+
+            <div id="error" class="error-alert hidden" role="alert" aria-live="assertive">
+                <div class="error-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" x2="12" y1="8" y2="12"/>
+                        <line x1="12" x2="12.01" y1="16" y2="16"/>
+                    </svg>
+                </div>
+                <span id="errorMessage"></span>
+            </div>
+
+            <section id="results" class="results hidden" aria-label="Study plan results">
+                <div class="results-grid">
+                    <article class="result-card card-blue" id="explanationCard" aria-labelledby="explanationTitle">
+                        <div class="card-header">
+                            <div class="card-icon" aria-hidden="true">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                                </svg>
+                            </div>
+                            <div class="card-title-group">
+                                <h2 id="explanationTitle" class="card-title">Detailed Explanation</h2>
+                                <span class="card-tag">In-depth</span>
+                            </div>
+                        </div>
+                        <div class="card-body" id="explanationContent" aria-live="polite"></div>
+                    </article>
+
+                    <article class="result-card card-green" id="simplifiedCard" aria-labelledby="simplifiedTitle">
+                        <div class="card-header">
+                            <div class="card-icon" aria-hidden="true">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 2v4"/>
+                                    <path d="m6.41 6.41-2.83-2.83"/>
+                                    <path d="M2 12h4"/>
+                                    <path d="m6.41 17.59-2.83 2.83"/>
+                                    <path d="M12 18v4"/>
+                                    <path d="m17.59 17.59 2.83 2.83"/>
+                                    <path d="M18 12h4"/>
+                                    <path d="m17.59 6.41 2.83-2.83"/>
+                                </svg>
+                            </div>
+                            <div class="card-title-group">
+                                <h2 id="simplifiedTitle" class="card-title">Simplified Version</h2>
+                                <span class="card-tag">Beginner-friendly</span>
+                            </div>
+                        </div>
+                        <div class="card-body" id="simplifiedContent" aria-live="polite"></div>
+                    </article>
+
+                    <article class="result-card card-purple" id="factCard" aria-labelledby="factTitle">
+                        <div class="card-header">
+                            <div class="card-icon" aria-hidden="true">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 2a7 7 0 0 1 7 7c0 2.4-1.2 4.6-3 5.8V17a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-2.2C6.2 13.6 5 11.4 5 9a7 7 0 0 1 7-7z"/>
+                                    <path d="M10 21v1"/>
+                                    <path d="M14 21v1"/>
+                                    <path d="M12 6v4"/>
+                                </svg>
+                            </div>
+                            <div class="card-title-group">
+                                <h2 id="factTitle" class="card-title">Interesting Fact</h2>
+                                <span class="card-tag">Did you know?</span>
+                            </div>
+                        </div>
+                        <div class="card-body" id="factContent" aria-live="polite"></div>
+                    </article>
+
+                    <article class="result-card card-orange" id="questionsCard" aria-labelledby="questionsTitle">
+                        <div class="card-header">
+                            <div class="card-icon" aria-hidden="true">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                                    <path d="M12 17h.01"/>
+                                </svg>
+                            </div>
+                            <div class="card-title-group">
+                                <h2 id="questionsTitle" class="card-title">Practice Questions</h2>
+                                <span class="card-tag">Test yourself</span>
+                            </div>
+                        </div>
+                        <div class="card-body" id="questionsContent" aria-live="polite"></div>
+                    </article>
+                </div>
+            </section>
+
+            <footer class="footer" role="contentinfo">
+                <div class="footer-content">
+                    <p class="footer-text">Powered by <strong>GPT-4o-mini</strong></p>
+                    <div class="footer-divider" aria-hidden="true"></div>
+                    <p class="footer-copyright">AI Study Planner</p>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
