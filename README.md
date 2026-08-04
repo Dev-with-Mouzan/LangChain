@@ -141,8 +141,8 @@ An autonomous research assistant with multiple specialized tools.
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/Dev-with-Mouzan/LangChian.git
-   cd LangChian
+   git clone https://github.com/Dev-with-Mouzan/LangChian_Documentation.git
+   cd LangChian_Documentation
    ```
 
 2. **Install core dependencies:**
